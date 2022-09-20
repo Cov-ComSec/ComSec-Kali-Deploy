@@ -1,11 +1,14 @@
  # Self-elevate the script if required
  if (-Not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] 'Administrator')) {
  if ([int](Get-CimInstance -Class Win32_OperatingSystem | Select-Object -ExpandProperty BuildNumber) -ge 6000) {
-  $CommandLine = "-File `"" + $MyInvocation.MyCommand.Path + "`" " + $MyInvocation.UnboundArguments
+  set $VAG_PATH=$PWD
+  $CommandLine = "-File `"" + $MyInvocation.MyCommand.Path + "`" " + " " + $VAG_PATH
+
   Start-Process -FilePath PowerShell.exe -Verb Runas -ArgumentList $CommandLine -Wait
   if ( $LastExitCode -ne 0 ) { exit }
   Write-Output "Looks like all software is ready. Attempting to build the VM..."
 
+  refreshenv
   vagrant up
   Read-host "Done"
   Exit
@@ -67,8 +70,3 @@ else
 {
     Write-Output "Cygwin is already installed. Skipping install steps..."
 }
-
-refreshenv
-vagrant up
-
-return 0
