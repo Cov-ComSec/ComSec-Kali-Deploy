@@ -6,8 +6,7 @@
   if ( $LastExitCode -ne 0 ) { exit }
   Write-Output "Looks like all software is ready. Attempting to build the VM..."
 
-  $CommandLine = "-File `"" + $PWD + "start_container.ps1" + "`" "
-  Start-Process -FilePath PowerShell.exe -Verb Runas -ArgumentList $CommandLine -Wait
+  vagrant up
   Read-host "Done"
   Exit
  }
@@ -24,8 +23,9 @@ if (( $has_virtualisation -ne "Y" ) -or ( $has_virtualisation -ne "y" ))
 if (-not( Test-Path -Path 'C:\ProgramData\chocolatey\bin' -PathType Container))
 {
     Write-Output "Looks like Chocolatey is not installed. Attempting to Install..."
-    $CommandLine = "-File `"" + $PWD + "install_choco.ps1" + "`" "
-    Start-Process -FilePath PowerShell.exe -Verb Runas -ArgumentList $CommandLine -Wait
+    Invoke-Expression((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))
+    $env:ChocolateyInstall = Convert-Path "$((Get-Command choco).Path)\..\.."
+    Import-Module "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
     if (-not(Test-Path -Path 'C:\ProgramData\chocolatey\bin' -PathType Container ))
     {
         Write-Error "Chocolatey install failed. Please install manually and re-run this script"
@@ -67,5 +67,8 @@ else
 {
     Write-Output "Cygwin is already installed. Skipping install steps..."
 }
+
+refreshenv
+vagrant up
 
 return 0
