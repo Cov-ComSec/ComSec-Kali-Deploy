@@ -5,6 +5,9 @@
   Start-Process -FilePath PowerShell.exe -Verb Runas -ArgumentList $CommandLine -Wait
   if ( $LastExitCode -ne 0 ) { exit }
   Write-Output "Looks like all software is ready. Attempting to build the VM..."
+
+  $CommandLine = "-File `"" + $MyInvocation.MyCommand.Path + "`" " + $MyInvocation.UnboundArguments
+  Start-Process -FilePath PowerShell.exe -Verb Runas -ArgumentList $CommandLine -Wait
   vagrant up
   Read-host "Done"
   Exit
@@ -39,7 +42,8 @@ if (-not(Test-Path -Path 'C:\HashiCorp\Vagrant\bin' -PathType Container))
     if (( $has_vagrant -ne "Y" ) -or ( $has_vagrant -ne "y" ))
     {
         Write-Output "Insalling VMware utilities"
-        choco install vagrant vagrant-vmware-utility -y
+        choco install vagrant -y
+        choco install vagrant-vmware-utility --ignore-dependencies -y
         vagrant plugin install vagrant-vmware-desktop
     }
 }
