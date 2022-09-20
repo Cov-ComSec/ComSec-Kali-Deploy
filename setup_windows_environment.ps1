@@ -6,9 +6,8 @@
   if ( $LastExitCode -ne 0 ) { exit }
   Write-Output "Looks like all software is ready. Attempting to build the VM..."
 
-  $CommandLine = "-File `"" + $MyInvocation.MyCommand.Path + "`" " + $MyInvocation.UnboundArguments
+  $CommandLine = "-File `"" + $PWD + "start_container.ps1" + "`" "
   Start-Process -FilePath PowerShell.exe -Verb Runas -ArgumentList $CommandLine -Wait
-  vagrant up
   Read-host "Done"
   Exit
  }
@@ -25,7 +24,8 @@ if (( $has_virtualisation -ne "Y" ) -or ( $has_virtualisation -ne "y" ))
 if (-not( Test-Path -Path 'C:\ProgramData\chocolatey\bin' -PathType Container))
 {
     Write-Output "Looks like Chocolatey is not installed. Attempting to Install..."
-    Invoke-Expression((new-object net.webclient).DownloadString('https://chocolatey.org/install.ps1'))
+    $CommandLine = "-File `"" + $PWD + "install_choco.ps1" + "`" "
+    Start-Process -FilePath PowerShell.exe -Verb Runas -ArgumentList $CommandLine -Wait
     if (-not(Test-Path -Path 'C:\ProgramData\chocolatey\bin' -PathType Container ))
     {
         Write-Error "Chocolatey install failed. Please install manually and re-run this script"
@@ -51,7 +51,7 @@ else
 {
     Write-Output "Vagrant is already installed. Skipping install steps..."
     Write-Output "Insalling VMware utilities"
-    choco install vagrant-vmware-utility -y
+    choco install vagrant-vmware-utility --ignore-dependencies -y
     vagrant plugin install vagrant-vmware-desktop
 }
 
