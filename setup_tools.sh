@@ -42,7 +42,7 @@ install_zsh_plugins()
 
 install_debuggers()
 {
-  # so people don't argue/complain
+  # so people don't argue/complain over which is best
   printf "\n\033[0;44m---> [+] Installing gdb PwnDbg, GEF, PED\033[0m\n"
   apt install gdb -qy
   sudo -u "$install_user" git clone https://github.com/apogiatzis/gdb-peda-pwndbg-gef.git
@@ -60,7 +60,7 @@ install_web_tools()
 {
   # can add tool suggestions here
   printf "\n\033[0;44m---> [+] Installing some common web tools \033[0m\n"
-  apt install -qy wpscan dnsrecon sqlmap ffuf burpsuite masscan nikto nmap ncat
+  apt install -qy wpscan dnsrecon sqlmap ffuf burpsuite masscan nikto nmap ncat gobuster enum4linux masscan exploitdb
 }
 
 install_python_tools()
@@ -110,9 +110,16 @@ install_pentesting_tools()
   ln -s "$USER_HOME"/autorecon/autorecon.py /bin/autorecon
 }
 
-  export DEBIAN_FRONTEND=noninteractive
-  export DEBCONF_NONINTERACTIVE_SEEN=true
-  dpkg-reconfigure keyboard-configuration
+export DEBIAN_FRONTEND=noninteractive
+export DEBCONF_NONINTERACTIVE_SEEN=true
+dpkg-reconfigure keyboard-configuration
+
+# check we are superuser
+if [ "$(id -u)" -ne 0 ]; then
+  printf "\n\033[0;44m---> [+] Please run with sudo. Exiting... \033[0m\n"
+  exit 0
+fi
+
 if [ $# -ne 1 ] &&  [ $# -ne 2 ]
 then
   echo "Incorrect number of arguments supplied"
