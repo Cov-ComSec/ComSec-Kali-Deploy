@@ -116,19 +116,16 @@ install_pentesting_tools()
 if [ $# -ne 1 ] &&  [ $# -ne 2 ]
 then
   echo "Incorrect number of arguments supplied"
-  echo "Usage: ./setup_tools.sh <kali> [vagrant] "
+  echo "Usage: ./setup_tools.sh <default_user> [vagrant] "
   exit 1
 fi
 
-if [ $# -eq 2 ]
-then
-  install_user="$1"
-  if [ "$2" = "vagrant" ]
+install_user="$1"
+is_vagrant=0
+
+if [ "$2" = "vagrant" ]
   then
       is_vagrant=1
-  else
-      is_vagrant=0
-  fi
 fi
 
 # check the supplied user exists
