@@ -113,11 +113,15 @@ install_pentesting_tools()
   export DEBIAN_FRONTEND=noninteractive
   export DEBCONF_NONINTERACTIVE_SEEN=true
   dpkg-reconfigure keyboard-configuration
-if [ $# -ne 2 ]
+if [ $# -ne 1 ] &&  [ $# -ne 2 ]
 then
   echo "Incorrect number of arguments supplied"
   echo "Usage: ./setup_tools.sh <kali> [vagrant] "
-else
+  exit 1
+fi
+
+if [ $# -eq 2 ]
+then
   install_user="$1"
   if [ "$2" = "vagrant" ]
   then
