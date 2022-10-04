@@ -15,7 +15,7 @@ Still very much a **draft** provisioning script for the ComSec kali instance for
 - Create a new Kali VM in VMWare Workstation or Player
 - Copy the script `setup_tools.sh` to the Kali VM
 - Run the script `setup_tools.sh` in the Kali VM. First argument is the username of the primary user. Will be created if not exist
-  - Recommended syntax: `sudo bash setup_tools.sh kali`
+  - Recommended syntax: `sudo ./setup_tools.sh kali`
 - Log in. If user was created, credentials are `user:user` 
 
 ### Automated Setup
