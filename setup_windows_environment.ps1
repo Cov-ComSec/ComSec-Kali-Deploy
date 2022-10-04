@@ -37,8 +37,8 @@ else
 }
 if (-not(Test-Path -Path 'C:\HashiCorp\Vagrant\bin' -PathType Container))
 {
-    $has_vagrant = Read-host "Looks like Vagrant is not installed. Has it been installed manually (Y/n)"
-    if (( $has_vagrant -ne "Y" ) -or ( $has_vagrant -ne "y" ))
+    $has_vagrant = Read-host "Looks like Vagrant is not installed. Install it? (Y/n)"
+    if (( $has_vagrant -ne "N" ) -or ( $has_vagrant -ne "n" ))
     {
         Write-Output "Insalling VMware utilities"
         choco install vagrant -y
