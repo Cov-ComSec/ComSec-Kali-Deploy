@@ -1,8 +1,9 @@
 # setup the kali user
 create_user()
 {
-  printf "\n\033[0;44m---> [+] Setting up user %s \033[0m\n" % "$1"
-  #  useradd -d /home/kali -u 1337 -p kali -m -U -s /bin/bash -G sudo docker kali
+  printf "\n\033[0;44m---> [+] Setting up user %s \033[0m\n" % "$install_user"
+    useradd -d "/home/$install_user" -u 1337 -p kali -m -U -s /bin/bash -G sudo docker "$install_user"
+    echo "$install_user:$install_user" | chpasswd
 }
 
 reconfigure_nsswitch()
@@ -128,11 +129,12 @@ then
 fi
 
 install_user="$1"
-is_vagrant=0
 
 if [ "$2" = "vagrant" ]
   then
       is_vagrant=1
+  else
+      is_vagrant=0
 fi
 
 # check the supplied user exists

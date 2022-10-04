@@ -21,5 +21,5 @@ Vagrant.configure("2") do |config|
   #   # Customize the amount of memory on the VM:
     vb.memory = "4068"
   end
-  config.vm.provision "shell", inline: "/bin/sh /vagrant/setup_tools.sh", args: ["kali", "vagrant"]
+  config.vm.provision "shell", inline: "/vagrant/setup_tools.sh kali vagrant" #, args: ["kali", "vagrant"]
 end
