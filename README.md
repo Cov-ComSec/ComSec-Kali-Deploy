@@ -9,7 +9,8 @@ Still very much a **draft** provisioning script for the ComSec kali instance for
 3. Either:
    - Configure system manually
    - Use the `setup_windows_environment.ps1` script to configure the system for you (using Vagrant).
-     - Script will prompt for administrator privileges.
+     - Installs choco, Vagrant (vagrant vmware plugin, vagrant vmware utility), 
+     - Requires administrator privileges.
 
 ### Manual Setup
 

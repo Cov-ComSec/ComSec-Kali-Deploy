@@ -54,17 +54,17 @@ else
     vagrant plugin install vagrant-vmware-desktop
 }
 
-if (-not((Test-Path -Path 'C:\tools\cygwin\bin' -PathType Container ) -or (-not(Test-Path -Path 'C:\tools\cygwin' -PathType Container ))))
-{
-    $has_cygwin = Read-host "Looks like Cygwin is not installed. Has it been installed manually? (Y/n)"
-    if (( $has_cygwin -ne "Y" ) -or ( $has_cygwin -ne "y" ))
-    {
-        choco install cyg-get -y --params "/InstallDir:C:\tools\cygwin"
-    }
-}
-else
-{
-    Write-Output "Cygwin is already installed. Skipping install steps..."
-}
+#if (-not((Test-Path -Path 'C:\tools\cygwin\bin' -PathType Container ) -or (-not(Test-Path -Path 'C:\tools\cygwin' -PathType Container ))))
+#{
+#    $has_cygwin = Read-host "Looks like Cygwin is not installed. Has it been installed manually? (Y/n)"
+#    if (( $has_cygwin -ne "Y" ) -or ( $has_cygwin -ne "y" ))
+#    {
+#        choco install cyg-get -y --params "/InstallDir:C:\tools\cygwin"
+#    }
+#}
+#else
+#{
+#    Write-Output "Cygwin is already installed. Skipping install steps..."
+#}
 Read-Host "Done installing. Press Enter to Reboot. Once rebooted, run `vagrant up` from this directory"
 Restart-Computer -Force
