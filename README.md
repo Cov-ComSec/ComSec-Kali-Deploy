@@ -6,8 +6,10 @@ Still very much a **draft** provisioning script for the ComSec kali instance for
 
 1. Clone this repo
 2. Ensure VMWare Workstation or Player is installed
-3. Configure system manually, or use the `setup_windows_environment.ps1` script to configure the system for you (using Vagrant).
-    - Script will prompt for administrator privileges.
+3. Either:
+   - Configure system manually
+   - Use the `setup_windows_environment.ps1` script to configure the system for you (using Vagrant).
+     - Script will prompt for administrator privileges.
 
 ### Manual Setup
 
