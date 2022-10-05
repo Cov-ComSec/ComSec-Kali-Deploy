@@ -1,4 +1,6 @@
- # Self-elevate the script if required
+$quiet = $args[0]
+
+# Self-elevate the script if required
  if (-Not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] 'Administrator')) {
  if ([int](Get-CimInstance -Class Win32_OperatingSystem | Select-Object -ExpandProperty BuildNumber) -ge 6000) {
 
@@ -11,7 +13,15 @@
  }
 }
 $ErrorActionPreference = 'Stop'
-$has_virtualisation = Read-host "Confirm VMware is installed (either VMware Player or Workstation) (Y/n)"
+
+if ($quiet -eq "QUIET")
+{
+    $has_virtualisation = "Y"
+}
+else
+{
+    $has_virtualisation = Read-host "Confirm VMware is installed (either VMware Player or Workstation) (Y/n)"
+}
 
 if (( $has_virtualisation -ne "Y" ) -or ( $has_virtualisation -ne "y" ))
 {
@@ -35,25 +45,29 @@ else
 {
     Write-Output "Chocolatey is already installed. Skipping install steps..."
 }
+
 if (-not(Test-Path -Path 'C:\HashiCorp\Vagrant\bin' -PathType Container))
 {
-    $has_vagrant = Read-host "Looks like Vagrant is not installed. Install it? (Y/n)"
+    if ($quiet -eq "QUIET") {
+        $has_vagrant = "N"
+    } else {
+        $has_vagrant = Read-host "Looks like Vagrant is not installed. Install it? (Y/n)"
+    }
+
     if (( $has_vagrant -ne "N" ) -or ( $has_vagrant -ne "n" ))
     {
         Write-Output "Insalling VMware utilities"
         choco install vagrant -y
-        choco install vagrant-vmware-utility --ignore-dependencies -y
-        vagrant plugin install vagrant-vmware-desktop
+
     }
 }
 else
 {
     Write-Output "Vagrant is already installed. Skipping install steps..."
     Write-Output "Insalling VMware utilities"
-    choco install vagrant-vmware-utility --ignore-dependencies -y
-    vagrant plugin install vagrant-vmware-desktop
 }
-
+choco install vagrant-vmware-utility --ignore-dependencies -y
+vagrant plugin install vagrant-vmware-desktop
 #if (-not((Test-Path -Path 'C:\tools\cygwin\bin' -PathType Container ) -or (-not(Test-Path -Path 'C:\tools\cygwin' -PathType Container ))))
 #{
 #    $has_cygwin = Read-host "Looks like Cygwin is not installed. Has it been installed manually? (Y/n)"
@@ -66,5 +80,10 @@ else
 #{
 #    Write-Output "Cygwin is already installed. Skipping install steps..."
 #}
-Read-Host "Done installing. Press Enter to Reboot. Once rebooted, run `vagrant up` from this directory"
+
+if ($quiet -eq "QUIET") {
+    Write-Output "Restarting"
+} else {
+    Read-Host "Done installing. Press Enter to Reboot. Once rebooted, run `vagrant up` from this directory"
+}
 Restart-Computer -Force
