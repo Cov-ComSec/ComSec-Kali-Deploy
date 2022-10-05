@@ -1,10 +1,10 @@
-$quiet = $args[0]
+$quiet=$args[0]
 
 # Self-elevate the script if required
  if (-Not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] 'Administrator')) {
  if ([int](Get-CimInstance -Class Win32_OperatingSystem | Select-Object -ExpandProperty BuildNumber) -ge 6000) {
 
-  $CommandLine = "-File `"" + $MyInvocation.MyCommand.Path + "`" " + " " + $VAG_PATH
+  $CommandLine = "-File `"" + $MyInvocation.MyCommand.Path + "`" " + $quiet
   Start-Process -FilePath PowerShell.exe -Verb Runas -ArgumentList $CommandLine -Wait
   if ( $LastExitCode -ne 0 ) { exit }
   Write-Output "Looks like all software is ready. Attempting to build the VM..."
