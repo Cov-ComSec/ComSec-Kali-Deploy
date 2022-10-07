@@ -49,7 +49,7 @@ else
 if (-not(Test-Path -Path 'C:\HashiCorp\Vagrant\bin' -PathType Container))
 {
     if ($quiet -eq "QUIET") {
-        $has_vagrant = "N"
+        $has_vagrant = "Y"
     } else {
         $has_vagrant = Read-host "Looks like Vagrant is not installed. Install it? (Y/n)"
     }
