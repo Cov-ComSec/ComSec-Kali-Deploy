@@ -82,8 +82,8 @@ vagrant plugin install vagrant-vmware-desktop
 #}
 
 if ($quiet -eq "QUIET") {
-    Write-Output "Restarting"
+  Exit
 } else {
     Read-Host "Done installing. Press Enter to Reboot. Once rebooted, run `vagrant up` from this directory"
+    Restart-Computer -Force
 }
-Restart-Computer -Force
