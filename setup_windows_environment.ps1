@@ -67,7 +67,8 @@ else
     Write-Output "Insalling VMware utilities"
 }
 choco install vagrant-vmware-utility --ignore-dependencies -y
-vagrant plugin install vagrant-vmware-desktop
+
+# vagrant plugin install vagrant-vmware-desktop
 #if (-not((Test-Path -Path 'C:\tools\cygwin\bin' -PathType Container ) -or (-not(Test-Path -Path 'C:\tools\cygwin' -PathType Container ))))
 #{
 #    $has_cygwin = Read-host "Looks like Cygwin is not installed. Has it been installed manually? (Y/n)"
@@ -84,6 +85,6 @@ vagrant plugin install vagrant-vmware-desktop
 if ($quiet -eq "QUIET") {
   Exit
 } else {
-    Read-Host "Done installing. Press Enter to Reboot. Once rebooted, run `vagrant up` from this directory"
+    Read-Host "Done installing. Press Enter to Reboot. Once rebooted, run:\n\tvagrant plugin install vagrant-vmware-desktop\n\tvagrant up` from this directory"
     Restart-Computer -Force
 }
