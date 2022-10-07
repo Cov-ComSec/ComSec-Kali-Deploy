@@ -2,7 +2,8 @@
 create_user()
 {
   printf "\n\033[0;44m---> [+] Setting up user %s \033[0m\n" % "$install_user"
-    useradd -d "/home/$install_user" -u 1337 -p kali -m -U -s /bin/bash -G sudo docker "$install_user"
+    useradd -d "/home/$install_user" -u 1337 -p kali -m -U -s /bin/bash -G sudo "$install_user"
+    usermod -aG docker "$install_user" 
     echo "$install_user:$install_user" | chpasswd
 }
 
