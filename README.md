@@ -25,11 +25,12 @@ Still very much a **draft** provisioning script for the ComSec kali instance for
 
 - Run `setup_windows_environment.ps1`. Supply answers to the prompts
 - When prompted, reboot PC
-- Once rebooted, navigate to the `ComSec-Kali-Deploy` directory and run `vagrant up`. Provisioning will begin.
+- Once rebooted, navigate to the `ComSec-Kali-Deploy` directory and run `vagrant plugin install vagrant-vmware-desktop` then `vagrant up`. Provisioning will begin.
 - Once finished, login with `kali:kali`
 
 ## TODO
 
 - [ ] Add FireFox privacy settings
 - [ ] Add a mode for user-free provisioning
+- [ ] Automate installing vagrant vmware plugin
 - [ ] More features...
