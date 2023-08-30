@@ -14,7 +14,7 @@ Vagrant.configure("2") do |config|
 
   #config.vm.provision "file", source: "./setup.sh", destination: "/home/vagrant/setup.sh"
 
-  config.vm.provider "vmware-desktop" do |vb|
+  config.vm.provider "vmware_desktop" do |vb|
   #   # Display the VirtualBox GUI when booting the machine
   #   vb.gui = true
   #
